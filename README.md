@@ -2,6 +2,8 @@
 
 This application has been prepared for YTU entrepreneurship club students which the simple architecture recommended by Google.
 
+* Looking for Presentation - [Check here](https://docs.google.com/presentation/d/1tUhhEd1iRpeEbaJWmwFoljdDe-VUC54rOVMMJVJfOtU/edit?usp=sharing)
+
 * Google to research the recommended architecture; [Architecture](https://developer.android.com/jetpack/guide)
 
 <p align="center">
