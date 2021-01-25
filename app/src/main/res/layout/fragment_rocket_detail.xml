@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <ImageView
+      android:id="@+id/rocketImageView"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/image_size_rocket_detail"
+      android:scaleType="fitXY"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:ignore="ContentDescription"
+      />
+
+  <ProgressBar
+      android:id="@+id/loadingBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:indeterminateTint="@color/bunker"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      style="?android:attr/progressBarStyle"
+      />
+
+  <TextView
+      android:id="@+id/rocketNameTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/margin_horizontal"
+      android:layout_marginTop="@dimen/margin_horizontal"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/rocketImageView"
+      tools:text="Falcon 1"
+      />
+
+  <TextView
+      android:id="@+id/rocketDescriptionTextView"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_top"
+      app:layout_constraintEnd_toEndOf="@+id/rocketCompanyTextView"
+      app:layout_constraintStart_toStartOf="@+id/rocketNameTextView"
+      app:layout_constraintTop_toBottomOf="@+id/rocketNameTextView"
+      tools:text="The Falcon 1 was an expendable launch system privately developed"
+      />
+
+  <TextView
+      android:id="@+id/rocketCompanyTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/margin_horizontal"
+      android:layout_marginTop="@dimen/margin_horizontal"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/rocketImageView"
+      tools:text="SpaceX"
+      />
+
+  <TextView
+      android:id="@+id/rocketHeightTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      app:layout_constraintStart_toStartOf="@+id/rocketDescriptionTextView"
+      app:layout_constraintTop_toBottomOf="@+id/rocketDescriptionTextView"
+      tools:text="Yükseklik = 22.25m"
+      />
+
+  <TextView
+      android:id="@+id/rocketMassTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_top"
+      app:layout_constraintStart_toStartOf="@+id/rocketHeightTextView"
+      app:layout_constraintTop_toBottomOf="@+id/rocketHeightTextView"
+      tools:text="Ağırlık = 30146 kg"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

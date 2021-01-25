@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">SpaceZ</string>
+  <string name="rocket_name">Roket ismi = %s</string>
+  <string name="rocket_country">Ülke = %s</string>
+  <string name="rocket_company">Şirket = %s</string>
+  <string name="rocket_height">Yükseklik = %s mt</string>
+  <string name="rocket_mass">Ağırlık = %s kg</string>
+</resources>
