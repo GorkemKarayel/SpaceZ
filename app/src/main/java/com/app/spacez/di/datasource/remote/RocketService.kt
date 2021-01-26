@@ -1,6 +1,5 @@
 package com.app.spacez.di.datasource.remote
 
-import com.app.spacez.data.Rocket
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -1,25 +1,38 @@
 package com.app.spacez.data
 
-import com.google.gson.annotations.SerializedName
+import com.app.spacez.di.datasource.local.Rocket as LocalRocket
+import com.app.spacez.di.datasource.remote.Rocket as RemoteRocket
 
 data class Rocket(
-    @SerializedName("rocket_id") val id: String,
-    @SerializedName("rocket_name") val rocketName: String?,
-    @SerializedName("country") val country: String?,
-    @SerializedName("first_flight") val firstTip: String?,
-    @SerializedName("flickr_images") val images: List<String>?,
-    @SerializedName("company") val company: String?,
-    @SerializedName("description") val description: String?,
-    @SerializedName("height") val height: Height,
-    @SerializedName("mass") val mass: Mass
+    val id: String,
+    val rocketName: String?,
+    val country: String?,
+    val firstTip: String?,
+    val images: List<String>?,
+    val company: String?,
+    val description: String?,
+    val height: Height,
+    val mass: Mass
 )
 
 data class Height(
-    @SerializedName("meters") val meters: Double,
-    @SerializedName("feet") val feet: Double
+    val meters: Double,
+    val feet: Double
 )
 
 data class Mass(
-    @SerializedName("kg") val kg: Int,
-    @SerializedName("lb") val lb: Int
+    val kg: Int,
+    val lb: Int
 )
+
+fun LocalRocket.toMap(): Rocket {
+    val height = Height(height.meters, height.feet)
+    val mass = Mass(mass.kg, mass.lb)
+    return Rocket(id, rocketName, country, firstTip, images, company, description, height, mass)
+}
+
+fun RemoteRocket.toMap(): Rocket {
+    val height = Height(height.meters, height.feet)
+    val mass = Mass(mass.kg, mass.lb)
+    return Rocket(id, rocketName, country, firstTip, images, company, description, height, mass)
+}

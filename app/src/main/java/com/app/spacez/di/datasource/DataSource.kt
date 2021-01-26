@@ -1,6 +1,8 @@
 package com.app.spacez.di.datasource
 
 import android.content.Context
+import androidx.room.Room
+import com.app.spacez.di.datasource.local.RocketDatabase
 import com.app.spacez.di.datasource.local.RocketLocalDataSource
 import com.app.spacez.di.datasource.remote.RocketRemoteDataSource
 import com.app.spacez.di.datasource.remote.RocketService
@@ -19,12 +21,12 @@ object RemoteDataStoreFactory {
 
 object LocalDataStoreFactory {
     lateinit var applicationContext: Context
-    /*
-       private val rocketDatabase = Room.databaseBuilder(
+
+    private val rocketDatabase = Room.databaseBuilder(
         applicationContext,
         RocketDatabase::class.java,
         "rockets.db"
     ).build()
-     */
-    val localDataSource = RocketLocalDataSource()
+
+    val localDataSource = RocketLocalDataSource(rocketDatabase)
 }

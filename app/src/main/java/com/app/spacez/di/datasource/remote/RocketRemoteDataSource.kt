@@ -1,3 +1,9 @@
 package com.app.spacez.di.datasource.remote
 
-class RocketRemoteDataSource(val rocketService: RocketService)
+
+class RocketRemoteDataSource(private val rocketService: RocketService) {
+
+    suspend fun getAllRockets() = rocketService.getAllRockets()
+
+    suspend fun getRocket(rocketId: String) = rocketService.getRocket(rocketId)
+}
