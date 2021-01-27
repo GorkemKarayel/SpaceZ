@@ -1,33 +1,45 @@
 package com.app.spacez.repository
 
 import android.content.Context
-import com.app.spacez.data.Rocket
-import com.app.spacez.data.toMap
-import com.app.spacez.di.datasource.LocalDataStoreFactory
-import com.app.spacez.di.datasource.RemoteDataStoreFactory
-import com.app.spacez.di.datasource.local.RocketLocalDataSource
-import com.app.spacez.di.datasource.remote.RocketRemoteDataSource
+import com.app.spacez.datasource.RocketRemoteDataSource
+import com.app.spacez.data.RocketResponse
+import com.app.spacez.datasource.RocketLocalDataSource
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RocketsRepository(applicationContext: Context) {
 
-    private val remoteDataSource: RocketRemoteDataSource = RemoteDataStoreFactory.remoteDataSource
-    private val localDataSource: RocketLocalDataSource = LocalDataStoreFactory.let { factory ->
-        factory.applicationContext = applicationContext
-        factory.localDataSource
+    private val remoteDataSource = RocketRemoteDataSource()
+    private val localDataSource = RocketLocalDataSource(applicationContext)
+
+    fun getAllRockets(callback: Callback<List<RocketResponse>>) {
+        remoteDataSource.getAllRockets().enqueue(callback)
     }
 
-    suspend fun getAllRockets(): List<Rocket> {
-        val localRockets = localDataSource.getAllRockets()
-        return if (localRockets.isEmpty()) {
-            val rockets = remoteDataSource.getAllRockets()
-            rockets.flatMap { rocket -> listOf(rocket.toMap()) }
+    fun getRocket(rocketId: String, rocketCallback: RocketCallback) {
+        val localRocket = localDataSource.getRocket(rocketId)
+        if (localRocket == null) {
+            remoteDataSource.getRocket(rocketId).enqueue(object : Callback<RocketResponse> {
+                override fun onFailure(call: Call<RocketResponse>, t: Throwable) {
+                    rocketCallback.onFailRocket(t)
+                }
+
+                override fun onResponse(
+                    call: Call<RocketResponse>,
+                    response: Response<RocketResponse>
+                ) {
+                    localDataSource.addRocket(response.body())
+                    rocketCallback.onSuccessRocket(response.body())
+                }
+            })
         } else {
-            localRockets.flatMap { rocket -> listOf(rocket.toMap()) }
+            rocketCallback.onSuccessRocket(localRocket)
         }
     }
 
-    suspend fun getRocket(rocketId: String): Rocket {
-        val rocket = remoteDataSource.getRocket(rocketId)
-        return rocket.toMap()
+    interface RocketCallback {
+        fun onSuccessRocket(rocket: RocketResponse?)
+        fun onFailRocket(throwable: Throwable)
     }
 }

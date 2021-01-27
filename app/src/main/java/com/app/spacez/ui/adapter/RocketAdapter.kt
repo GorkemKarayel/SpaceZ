@@ -11,13 +11,16 @@ class RocketAdapter(
 ) : ListAdapter<Rocket, RocketViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RocketViewHolder {
-        return RocketViewHolder.create(parent)
+        val viewHolder = RocketViewHolder.create(parent)
+        viewHolder.itemView.setOnClickListener {
+            rocketListener.invoke(getItem(viewHolder.adapterPosition))
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: RocketViewHolder, position: Int) {
         val rocket: Rocket = getItem(position)
         holder.bind(rocket)
-        holder.itemView.setOnClickListener { rocketListener.invoke(getItem(holder.adapterPosition)) }
     }
 
     internal class RocketDiff : ItemCallback<Rocket>() {

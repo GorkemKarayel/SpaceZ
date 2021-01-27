@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.app.spacez.R
 import com.app.spacez.data.ResultHolder
@@ -16,26 +19,36 @@ import com.app.spacez.data.ResultHolder.Error
 import com.app.spacez.data.ResultHolder.Loading
 import com.app.spacez.data.ResultHolder.Success
 import com.app.spacez.data.Rocket
-import com.app.spacez.databinding.FragmentRocketDetailBinding
 import com.bumptech.glide.Glide
 
 class RocketDetailFragment : Fragment() {
 
-    private var _binding: FragmentRocketDetailBinding? = null
-    private val binding get() = _binding!!
+    private val viewModel: RocketDetailViewModel by viewModels()
 
-    private val viewModel: RocketDetailViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(RocketDetailViewModel::class.java)
-    }
     private val rocketId by lazy { requireArguments().getString(ARG_ROCKET_ID) }
+
+    private lateinit var rocketImageView: ImageView
+    private lateinit var loadingBar: ProgressBar
+    private lateinit var rocketNameTextView: TextView
+    private lateinit var rocketDescriptionTextView: TextView
+    private lateinit var rocketCompanyTextView: TextView
+    private lateinit var rocketHeightTextView: TextView
+    private lateinit var rocketMassTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRocketDetailBinding.inflate(inflater, container, false)
-        return binding.root
+        val view = inflater.inflate(R.layout.fragment_rocket_detail, container, false)
+        rocketImageView = view.findViewById(R.id.rocketImageView)
+        loadingBar = view.findViewById(R.id.loadingBar)
+        rocketNameTextView = view.findViewById(R.id.rocketNameTextView)
+        rocketDescriptionTextView = view.findViewById(R.id.rocketDescriptionTextView)
+        rocketCompanyTextView = view.findViewById(R.id.rocketCompanyTextView)
+        rocketHeightTextView = view.findViewById(R.id.rocketHeightTextView)
+        rocketMassTextView = view.findViewById(R.id.rocketMassTextView)
+        return view
     }
 
     override fun onStart() {
@@ -46,25 +59,20 @@ class RocketDetailFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun observeUiState(resultHolder: ResultHolder<Rocket>) = when (resultHolder) {
-        is Loading -> binding.loadingBar.visibility = View.VISIBLE
+        is Loading -> loadingBar.visibility = View.VISIBLE
         is Success -> {
-            binding.loadingBar.visibility = View.GONE
+            loadingBar.visibility = View.GONE
             renderUi(resultHolder.data)
         }
         is Error -> {
-            binding.loadingBar.visibility = View.GONE
+            loadingBar.visibility = View.GONE
             Toast.makeText(requireActivity(), resultHolder.error, Toast.LENGTH_LONG).show()
         }
     }
 
     @SuppressLint("StringFormatMatches")
-    private fun renderUi(data: Rocket?) = with(binding) {
+    private fun renderUi(data: Rocket?) {
         if (data == null) return
 
         Glide.with(this@RocketDetailFragment).load(data.images?.first()).into(rocketImageView)

@@ -1,8 +1,5 @@
 package com.app.spacez.data
 
-import com.app.spacez.di.datasource.local.Rocket as LocalRocket
-import com.app.spacez.di.datasource.remote.Rocket as RemoteRocket
-
 data class Rocket(
     val id: String,
     val rocketName: String?,
@@ -25,13 +22,7 @@ data class Mass(
     val lb: Int
 )
 
-fun LocalRocket.toMap(): Rocket {
-    val height = Height(height.meters, height.feet)
-    val mass = Mass(mass.kg, mass.lb)
-    return Rocket(id, rocketName, country, firstTip, images, company, description, height, mass)
-}
-
-fun RemoteRocket.toMap(): Rocket {
+fun RocketResponse.toMap(): Rocket {
     val height = Height(height.meters, height.feet)
     val mass = Mass(mass.kg, mass.lb)
     return Rocket(id, rocketName, country, firstTip, images, company, description, height, mass)

@@ -1,8 +1,8 @@
-package com.app.spacez.di.datasource.remote
+package com.app.spacez.data
 
 import com.google.gson.annotations.SerializedName
 
-data class Rocket(
+data class RocketResponse(
     @SerializedName("rocket_id") val id: String,
     @SerializedName("rocket_name") val rocketName: String?,
     @SerializedName("country") val country: String?,
@@ -10,16 +10,16 @@ data class Rocket(
     @SerializedName("flickr_images") val images: List<String>?,
     @SerializedName("company") val company: String?,
     @SerializedName("description") val description: String?,
-    @SerializedName("height") val height: Height,
-    @SerializedName("mass") val mass: Mass
+    @SerializedName("height") val height: HeightResponse,
+    @SerializedName("mass") val mass: MassResponse
 )
 
-data class Height(
+data class HeightResponse(
     @SerializedName("meters") val meters: Double,
     @SerializedName("feet") val feet: Double
 )
 
-data class Mass(
+data class MassResponse(
     @SerializedName("kg") val kg: Int,
     @SerializedName("lb") val lb: Int
 )
